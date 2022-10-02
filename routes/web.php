@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\VendorController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -30,6 +31,27 @@ Route::prefix('admin')->group(function () {
 
         Route::get('/register', 'register')->name('admin.register');
         Route::post('/register', 'store')->name('store.admin');
+    });
+
+});
+
+// Defining vendor routes
+Route::prefix('vendor')->group(function () {
+
+    Route::controller(VendorController::class)->group(function () {
+
+        Route::get('/login', 'loginPage')->name('vendor.login_form');
+
+        Route::get('/dashboard', 'vendorDashboard')->name('vendor.dashboard')
+        ->middleware('vendor');
+
+        Route::post('/login', 'login')->name('vendor.login');
+
+        Route::get('/logout', 'logout')->name('vendor.logout');
+
+        Route::get('/register', 'register')->name('vendor.register');
+
+        Route::post('/register', 'store')->name('store.vendor');
     });
 
 });
